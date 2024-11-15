@@ -1,0 +1,79 @@
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<div class="container">  
+    <h4 class="container_text">Upload your document</h4>
+    <input type="file" id="fileInput" style="display: none;" webkitdirectory />
+    <i class="fa-solid fa-cloud-arrow-up fa-3x" id="uploadIcon" style="cursor: pointer;"></i>
+
+</div>
+
+
+<div class="get_detail">
+  <!-- Button to Toggle View -->
+  <button class="view-btn" (click)="toggleView()">
+    {{ showData ? 'Hide Personal Details' : 'View Personal Details' }}
+  </button>
+</div>
+
+<div *ngIf="showData" class="details-container">
+  <!-- Table for Personal Details -->
+  <h3>Personal Details</h3>
+  <table class="details-table">
+    <thead>
+      <tr>
+        <th>Field</th>
+        <th>Value</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Name</td>
+        <td>{{ personalDetails?.name }}</td>
+      </tr>
+      <tr>
+        <td>Email</td>
+        <td>{{ personalDetails?.email }}</td>
+      </tr>
+      <tr>
+        <td>Mobile Number</td>
+        <td>{{ personalDetails?.['mobile number'] }}</td>
+      </tr>
+      <tr>
+        <td>LinkedIn</td>
+        <td>
+          <a href="{{ personalDetails?.linkedin }}" target="_blank" class="linkedin-link">
+            {{ personalDetails?.linkedin }}
+          </a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <br>
+
+  <!-- Skills Section -->
+  <h3>Skills</h3>
+  <ul class="skills-list">
+    <li *ngFor="let skill of skills">{{ skill }}</li>
+  </ul>
+</div>
+
+
+
+  <button (click)="fetchDirectory()" class="btn btn-primary">Fetch FTP Directory</button>
+
+  <div *ngIf="directory.length > 0">
+    <h2>Files in Directory:</h2>
+    <ul>
+      <li *ngFor="let file of directory">{{ file }}</li>
+    </ul>  
+  </div>
+  
+  <div *ngIf="directory.length === 0">
+    <p>No files in the directory or not fetched yet.</p>
+  </div>
+
+  <div class="input">
+    <input type="text" [(ngModel)]="filename" placeholder="Enter filename" />
+    <button (click)="downloadFile()">Download</button>
+  </div>
